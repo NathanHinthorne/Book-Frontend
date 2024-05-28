@@ -1,0 +1,1 @@
+// BookDetails.js: Component to display detailed information about a single book.
