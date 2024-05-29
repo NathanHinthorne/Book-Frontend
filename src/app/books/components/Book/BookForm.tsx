@@ -1,6 +1,7 @@
+import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
 import React, { useState } from 'react';
 import { IBook } from 'src/core/model/book.model';
-import Input from '../Common/Input';
 
 
 function BookForm({ onSubmit }: { onSubmit: (formData: IBook) => void }) {
@@ -49,27 +50,28 @@ function BookForm({ onSubmit }: { onSubmit: (formData: IBook) => void }) {
         onSubmit(formData);
     };
 
+
     return (
         <form onSubmit={handleSubmit}>
-            <Input label="ISBN" value={formData.isbn13} onChange={handleChange} type="number" name="isbn13" />
-            <Input label="Authors" value={formData.authors} onChange={handleChange} name="authors" />
-            <Input label="Publication Year" value={formData.publication} onChange={handleChange} type="number" name="publication" />
-            <Input label="Original Title" value={formData.original_title} onChange={handleChange} name="original_title" />
-            <Input label="Title" value={formData.title} onChange={handleChange} name="title" />
+            <TextField label="ISBN" value={formData.isbn13} onChange={handleChange} type="number" name="isbn13" />
+            <TextField label="Authors" value={formData.authors} onChange={handleChange} name="authors" />
+            <TextField label="Publication Year" value={formData.publication} onChange={handleChange} type="number" name="publication" />
+            <TextField label="Original Title" value={formData.original_title} onChange={handleChange} name="original_title" />
+            <TextField label="Title" value={formData.title} onChange={handleChange} name="title" />
 
-            <Input label="Large Icon URL" value={formData.icons.large} onChange={handleChange} name="large" />
-            <Input label="Small Icon URL" value={formData.icons.small} onChange={handleChange} name="small" />
+            <TextField label="Large Icon URL" value={formData.icons.large} onChange={handleChange} name="large" />
+            <TextField label="Small Icon URL" value={formData.icons.small} onChange={handleChange} name="small" />
 
-            <Input label="Average Rating" value={formData.ratings.average} onChange={handleRatingsChange} type="number" name="average" />
-            <Input label="Rating Count" value={formData.ratings.count} onChange={handleRatingsChange} type="number" name="count" />
-            <Input label="Rating 1" value={formData.ratings.rating_1} onChange={handleRatingsChange} type="number" name="rating_1" />
-            <Input label="Rating 2" value={formData.ratings.rating_2} onChange={handleRatingsChange} type="number" name="rating_2" />
-            <Input label="Rating 3" value={formData.ratings.rating_3} onChange={handleRatingsChange} type="number" name="rating_3" />
-            <Input label="Rating 4" value={formData.ratings.rating_4} onChange={handleRatingsChange} type="number" name="rating_4" />
-            <Input label="Rating 5" value={formData.ratings.rating_5} onChange={handleRatingsChange} type="number" name="rating_5" />
+            <TextField label="Average Rating" value={formData.ratings.average} onChange={handleRatingsChange} type="number" name="average" />
+            <TextField label="Rating Count" value={formData.ratings.count} onChange={handleRatingsChange} type="number" name="count" />
+            <TextField label="1 Star Ratings" value={formData.ratings.rating_1} onChange={handleRatingsChange} type="number" name="rating_1" />
+            <TextField label="2 Star Ratings" value={formData.ratings.rating_2} onChange={handleRatingsChange} type="number" name="rating_2" />
+            <TextField label="3 Star Ratings" value={formData.ratings.rating_3} onChange={handleRatingsChange} type="number" name="rating_3" />
+            <TextField label="4 Star Ratings" value={formData.ratings.rating_4} onChange={handleRatingsChange} type="number" name="rating_4" />
+            <TextField label="5 Star Ratings" value={formData.ratings.rating_5} onChange={handleRatingsChange} type="number" name="rating_5" />
 
-            <button type="submit">Submit</button>
-            <button type="reset">Reset</button>
+            <Button type="submit" variant="contained">Submit</Button>
+            <Button type="reset" variant="contained">Reset</Button>
         </form>
     );
 };
