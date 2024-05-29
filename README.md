@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-nex
 
 ## Description
 
-This frontend application was built to run on [another team's web API](https://github.com/parker7johnson/460-Backend). It uses React, Next.js, and Material UI to create a simple app with a navigation bar and pages to (1) search for books, (2) view a book's details, and (3) add a new book to the database.
+This frontend application was built to run on [another group's web API](https://github.com/parker7johnson/460-Backend). It uses React, Next.js, and Material UI to create a simple app with a navigation bar and pages to (1) search for books, (2) view a book's details, and (3) add a new book to the database.
 
 ## How to use
 
