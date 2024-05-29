@@ -26,20 +26,45 @@ import ProTip from "@/components/ProTips";
 import Informational from "@/components/Informational";
 import BookList from "src/app/books/components/Book/BookList";
 import { IBook } from "@/core/model/book.model";
-// import Footer from "src/app/books/components/Layout/Footer";
-// import Header from "src/app/books/components/Layout/Header";
+import Footer from "src/app/books/components/Layout/Footer";
+import Header from "src/app/books/components/Layout/Header";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
 
 const theme = createTheme();
 
-export default function Page() {
-    const [books, setBooks] = useState<IBook[]>([]);
+export default function Home() {
+    // fake books data
+    const [books, setBooks] = useState<IBook[]>([{
+        isbn13: 0,
+        authors: "...author",
+        publication: 0,
+        original_title: "...original title",
+        title: "...title",
+        ratings: {
+            average: 0,
+            count: 0,
+            rating_1: 0,
+            rating_2: 0,
+            rating_3: 0,
+            rating_4: 0,
+            rating_5: 0,
+        },
+        icons: {
+            large: "...large icon",
+            small: "...small icon",
+        },
+    }]);
 
+    // reflect all books from the database to the bookList
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks = await api.getAllBooks(1, 30);
-            setBooks(fetchedBooks);
+            try {
+                const fetchedBooks = await api.getAllBooks(1, 30); // 1 page, 30 books per page
+                setBooks(fetchedBooks);
+            } catch (error) {
+                console.error('Failed to fetch books:', error);
+            }
         };
 
         fetchBooks();
@@ -59,13 +84,13 @@ export default function Page() {
                         alignItems: "center",
                     }}
                 >
-                    <IconButton aria-label="Delete" color="primary">
-                        <DeleteIcon />
-                    </IconButton>
+                    <Typography variant="h4" component="h1" gutterBottom>
+                        Explore
+                    </Typography>
                     <BookList books={books} />
                 </Box>
             </Container>
-            {/* <Footer /> */}
+            <Footer />
         </ThemeProvider>
     );
 }

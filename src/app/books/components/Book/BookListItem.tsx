@@ -1,4 +1,5 @@
 import { IBook } from 'src/core/model/book.model';
+import './BookListItem.css'; // import the CSS file
 
 function BookListItem({ book }: { book: IBook }) {
     const renderBook = () => {
@@ -15,7 +16,11 @@ function BookListItem({ book }: { book: IBook }) {
         );
     };
 
-    return (book) ? renderBook() : <p>No book found</p>;
+    return (
+        <div className="book-item">
+            {book ? renderBook() : <p>No book found</p>}
+        </div>
+    );
 }
 
 export default BookListItem;
