@@ -8,7 +8,7 @@ interface InputProps {
     name: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, value, onChange, type = 'text', name }) => {
+function Input({ label, value, onChange, type = 'text', name }: InputProps) {
     return (
         <div>
             <label>
