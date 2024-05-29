@@ -1,4 +1,4 @@
-// to be used with BookForm.tsx
+// to be used with BookDetails.tsx
 
 import { IRatings } from 'src/core/model/book.model';
 

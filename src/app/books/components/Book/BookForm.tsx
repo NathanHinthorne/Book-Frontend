@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IBook } from 'src/core/model/book.model';
 import Input from '../Common/Input';
-import RatingStars from './RatingStars';
 
 
 function BookForm({ onSubmit }: { onSubmit: (formData: IBook) => void }) {
@@ -70,6 +69,7 @@ function BookForm({ onSubmit }: { onSubmit: (formData: IBook) => void }) {
             <Input label="Rating 5" value={formData.ratings.rating_5} onChange={handleRatingsChange} type="number" name="rating_5" />
 
             <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
         </form>
     );
 };
