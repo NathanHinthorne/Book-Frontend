@@ -1,3 +1,5 @@
+// to be used with BookForm.tsx
+
 import { IRatings } from 'src/core/model/book.model';
 
 function RatingStars({ ratings }: { ratings: IRatings }) {

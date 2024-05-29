@@ -7,12 +7,12 @@ export interface IRatings {
     rating_4: number;
     rating_5: number;
 }
-  
+
 export interface IUrlIcon {
     large: string;
     small: string;
 }
-  
+
 export interface IBook {
     isbn13: number;
     authors: string;
