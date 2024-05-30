@@ -56,7 +56,7 @@ export default function Home() {
         },
     }]);
 
-    // reflect all books from the database to the bookList
+    // reflect all books from the database in the bookList
     useEffect(() => {
         const fetchBooks = async () => {
             try {
@@ -72,9 +72,6 @@ export default function Home() {
 
     return (
         <>
-            {/* <Head>
-                <link rel="icon" href="/favicon.ico" />
-            </Head> */}
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Header />
