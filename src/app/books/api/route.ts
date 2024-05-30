@@ -11,7 +11,8 @@ async function fetchWithRevalidate(url: string, options: RequestInit, tags: stri
   return { data, status: res.status, ok: res.ok };
 }
 
-
+//TODO - remove this function
+// I'm having trouble doing revlidaion on book api responses. For now, I'm just going to use this function - Nathan
 async function justFetch(url: string, options: RequestInit) {
   const res = await fetch(url, options);
   const data = await res.json();
