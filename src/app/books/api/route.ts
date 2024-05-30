@@ -12,31 +12,36 @@ async function fetchWithRevalidate(url: string, options: RequestInit, tags: stri
 }
 
 
+async function justFetch(url: string, options: RequestInit) {
+  const res = await fetch(url, options);
+  const data = await res.json();
+  return { data, status: res.status, ok: res.ok };
+}
+
+
 // ---- GET ----
 
 export async function getAllBooks(pageNumber?: number, booksPerPage?: number) {
   let data;
   if (pageNumber && booksPerPage) {
-    ({ data } = await fetchWithRevalidate(`http://localhost:4000/books/all?page=${pageNumber}&limit=${booksPerPage}`, {
+    ({ data } = await justFetch(`http://localhost:4000/books/all?page=${pageNumber}&limit=${booksPerPage}`, {
       method: "GET",
-      cache: "no-store",
-    }, ["books"]));
+    }));
   } else {
-    ({ data } = await fetchWithRevalidate(`http://localhost:4000/books/all`, {
+    ({ data } = await justFetch(`http://localhost:4000/books/all`, {
       method: "GET",
-      cache: "no-store",
-    }, ["books"]));
+    }));
   }
 
   // The response data is an object with a "books" property
   // Thus, we should return the "books" property directly
+  console.log(data.books);
   return data.books;
 }
 
 export async function getBookByIsbn(isbn: number) {
   const { data } = await fetchWithRevalidate(`http://localhost:4000/books?isbn=${isbn}`, {
     method: "GET",
-    cache: "no-store",
   }, ["books"]);
 
   return data.books;
@@ -45,7 +50,6 @@ export async function getBookByIsbn(isbn: number) {
 export async function getBookByTitle(title: string) {
   const { data } = await fetchWithRevalidate(`http://localhost:4000/books?title=${title}`, {
     method: "GET",
-    cache: "no-store",
   }, ["books"]);
 
   return data.books;
@@ -54,7 +58,6 @@ export async function getBookByTitle(title: string) {
 export async function getBookByAuthor(author: string) {
   const { data } = await fetchWithRevalidate(`http://localhost:4000/books?author=${author}`, {
     method: "GET",
-    cache: "no-store",
   }, ["books"]);
 
   return data.books;
@@ -63,7 +66,6 @@ export async function getBookByAuthor(author: string) {
 export async function getBookByPublicationYear(publicationYear: number) {
   const { data } = await fetchWithRevalidate(`http://localhost:4000/books?pub_year=${publicationYear}`, {
     method: "GET",
-    cache: "no-store",
   }, ["books"]);
 
   return data.books;
@@ -72,7 +74,6 @@ export async function getBookByPublicationYear(publicationYear: number) {
 export async function getBookByRating(rating: number) {
   const { data } = await fetchWithRevalidate(`http://localhost:4000/books?rating=${rating}`, {
     method: "GET",
-    cache: "no-store",
   }, ["books"]);
 
   return data.books;

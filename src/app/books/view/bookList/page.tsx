@@ -37,10 +37,10 @@ export default function Home() {
     // fake books data
     const [books, setBooks] = useState<IBook[]>([{
         isbn13: 0,
-        authors: "...author",
+        authors: "...loading authors",
         publication: 0,
-        original_title: "...original title",
-        title: "...title",
+        original_title: "...loading original title",
+        title: "...loading title",
         ratings: {
             average: 0,
             count: 0,
@@ -51,8 +51,8 @@ export default function Home() {
             rating_5: 0,
         },
         icons: {
-            large: "...large icon",
-            small: "...small icon",
+            large: "...loading large icon",
+            small: "...loading small icon",
         },
     }]);
 
