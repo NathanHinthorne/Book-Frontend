@@ -38,7 +38,6 @@ export default function HeaderAndFooter() {
         sx={{
           '& .MuiTextField-root': { m: 4, width: '30ch' },
           display: 'flex',
-          alignItems: "right"
         }}
         // noValidate
         // autoComplete="off"
@@ -55,13 +54,13 @@ export default function HeaderAndFooter() {
           }}
           options={searchByArray}
           sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Search by" />}
+          renderInput={(params) => <TextField {...params} label = "Search by" />}
         />
         {/* search input */}
         <TextField label={`${inputValue}`} variant="standard" />
         {/* add book icon */}
-        <IconButton color="primary" aria-label="add new book">
-          <AddIcon />
+        <IconButton color = "primary" aria-label = "add new book" href = "/books/view/bookForm">
+          <AddIcon fontSize = "large" />
         </IconButton>
       </Box>
 
