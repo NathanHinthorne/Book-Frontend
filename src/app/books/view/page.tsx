@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -37,7 +36,9 @@ export default function HeaderAndFooter() {
       <Box
         component="header"
         sx={{
-          '& .MuiTextField-root': { m: 4, width: '25ch' },
+          '& .MuiTextField-root': { m: 4, width: '30ch' },
+          display: 'flex',
+          alignItems: "right"
         }}
         // noValidate
         // autoComplete="off"
@@ -68,8 +69,9 @@ export default function HeaderAndFooter() {
       <Box
         sx={{
           display: 'flex',
+          alignItems: 'center',
           flexDirection: 'column',
-          minHeight: '75vh',
+          minHeight: '85vh',
         }}
       >
         <Box
