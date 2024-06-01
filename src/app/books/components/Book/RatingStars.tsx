@@ -1,6 +1,7 @@
 // to be used with BookDetails.tsx
 
 import { IRatings } from 'src/core/model/book.model';
+import Rating from '@mui/material/Rating';
 
 function RatingStars({ ratings }: { ratings: IRatings }) {
     const renderStars = () => {

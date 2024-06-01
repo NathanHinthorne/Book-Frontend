@@ -26,46 +26,73 @@ import ProTip from "@/components/ProTips";
 import Informational from "@/components/Informational";
 import BookList from "src/app/books/components/Book/BookList";
 import { IBook } from "@/core/model/book.model";
-// import Footer from "src/app/books/components/Layout/Footer";
-// import Header from "src/app/books/components/Layout/Header";
+import Footer from "src/app/books/components/Layout/Footer";
+import Header from "src/app/books/components/Layout/Header";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
 
 const theme = createTheme();
 
-export default function Page() {
-    const [books, setBooks] = useState<IBook[]>([]);
+export default function Home() {
+    // fake books data
+    const [books, setBooks] = useState<IBook[]>([{
+        isbn13: 0,
+        authors: "...loading authors",
+        publication: 0,
+        original_title: "...loading original title",
+        title: "...loading title",
+        ratings: {
+            average: 0,
+            count: 0,
+            rating_1: 0,
+            rating_2: 0,
+            rating_3: 0,
+            rating_4: 0,
+            rating_5: 0,
+        },
+        icons: {
+            large: "...loading large icon",
+            small: "...loading small icon",
+        },
+    }]);
 
+    // reflect all books from the database in the bookList
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks = await api.getAllBooks(1, 30);
-            setBooks(fetchedBooks);
+            try {
+                const fetchedBooks = await api.getAllBooks(1, 30); // 1 page, 30 books per page
+                setBooks(fetchedBooks);
+            } catch (error) {
+                console.error('Failed to fetch books:', error);
+            }
         };
 
         fetchBooks();
     }, []);
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Container maxWidth="lg">
-                <Box
-                    sx={{
-                        my: 4,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    <IconButton aria-label="Delete" color="primary">
-                        <DeleteIcon />
-                    </IconButton>
-                    <BookList books={books} />
-                </Box>
-            </Container>
-            {/* <Footer /> */}
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Header />
+                <Container maxWidth="lg">
+                    <Box
+                        sx={{
+                            my: 4,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            Explore
+                        </Typography>
+                        <BookList books={books} />
+                    </Box>
+                </Container>
+                <Footer />
+            </ThemeProvider>
+        </>
     );
 }
