@@ -1,4 +1,4 @@
-// template from mui material ui
+'use client';
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider } from '@mui/material/styles';
@@ -7,6 +7,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import theme from "@/theme";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+
+const searchByArray = ['Author', 'Title', 'ISBN', 'Publication Year', 'Rating'];
 
 function Copyright() {
   return (
@@ -21,37 +27,57 @@ function Copyright() {
   );
 }
 
-export default function StickyFooter() {
+export default function HeaderAndFooter() {
+  // drop down menu
+  const [value, setValue] = React.useState <string | null> (searchByArray[0]);
+  const [inputValue, setInputValue] = React.useState('');
   return (
     <ThemeProvider theme={theme}>
+      {/* header */}
+      <Box
+        component="header"
+        sx={{
+          '& .MuiTextField-root': { m: 4, width: '25ch' },
+        }}
+        // noValidate
+        // autoComplete="off"
+      >
+        {/* drop down menu */}
+        <Autocomplete
+          value={value}
+          onChange={(event: any, newValue: string | null) => {
+            setValue(newValue);
+          }}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          options={searchByArray}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Search by" />}
+        />
+        {/* search input */}
+        <TextField label={`${inputValue}`} variant="standard" />
+        {/* add book icon */}
+        <IconButton color="primary" aria-label="add new book">
+          <AddIcon />
+        </IconButton>
+      </Box>
+
+      {/* footer */}
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '100vh',
+          minHeight: '75vh',
         }}
       >
-        {/* <CssBaseline /> */}
-        {/* <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-          <Typography variant="h2" component="h1" gutterBottom>
-            Sticky footer
-          </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
-            {'Pin a footer to the bottom of the viewport.'}
-            {'The footer will move as the main element of the page grows.'}
-          </Typography>
-          <Typography variant="body1">Sticky footer placeholder.</Typography>
-        </Container> */}
         <Box
           component="footer"
           sx={{
             py: 3,
             px: 2,
-            mt: 'auto',
-          //   backgroundColor: (theme) =>
-          //     theme.palette.mode === 'light'
-          //       ? theme.palette.grey[200]
-          //       : theme.palette.grey[800],
+            mt: 'auto'
           }}
         >
           <Container maxWidth="sm">
