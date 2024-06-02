@@ -21,35 +21,31 @@ function Copyright() {
   }
 
 function Footer() {
-
     return (
-        <footer>
-            {/* footer */}
+        <Box
+            sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            minHeight: '58vh',
+            }}
+        >
             <Box
-                sx={{
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                minHeight: '58vh',
-                }}
+            component="footer"
+            sx={{
+                py: 3,
+                px: 2,
+                mt: 'auto'
+            }}
             >
-                <Box
-                component="footer"
-                sx={{
-                    py: 3,
-                    px: 2,
-                    mt: 'auto'
-                }}
-                >
-                <Container maxWidth="sm">
-                    <Typography variant="body1">
-                    AMAZON 2.0
-                    </Typography>
-                    <Copyright />
-                </Container>
-                </Box>
+            <Container maxWidth="sm">
+                <Typography variant="body1">
+                AMAZON 2.0
+                </Typography>
+                <Copyright />
+            </Container>
             </Box>
-        </footer>
+        </Box>
     );
 }
 

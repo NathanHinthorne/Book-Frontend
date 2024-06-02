@@ -15,41 +15,36 @@ function Header() {
   const [inputValue, setInputValue] = React.useState('');
 
   return (
-    <header>
-      <ThemeProvider theme={theme}>
-        {/* header */}
-        <Box
-          component="header"
-          sx={{
-            '& .MuiTextField-root': { m: 4, width: '30ch' },
-            display: 'flex',
-          }}
-          // noValidate
-          // autoComplete="off"
-        >
-          {/* drop down menu */}
-          <Autocomplete
-            value={value}
-            onChange={(event: any, newValue: string | null) => {
-              setValue(newValue);
-            }}
-            inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            options={searchByArray}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label = "Search by" />}
-          />
-          {/* search input */}
-          <TextField label={`${inputValue}`} variant="standard" />
-          {/* add book icon */}
-          <IconButton color = "primary" aria-label = "add new book" href = "/books/view/bookForm">
-            <AddIcon fontSize = "large" />
-          </IconButton>
-        </Box>
-      </ThemeProvider>
-    </header>
+    <Box
+      component="header"
+      sx={{
+        '& .MuiTextField-root': { m: 4, width: '30ch' },
+        display: 'flex',
+      }}
+      // noValidate
+      // autoComplete="off"
+    >
+      {/* drop down menu */}
+      <Autocomplete
+        value = {value}
+        onChange = {(event: any, newValue: string | null) => {
+          setValue(newValue);
+        }}
+        inputValue = {inputValue}
+        onInputChange = {(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        options = {searchByArray}
+        sx = {{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label = "Search by" />}
+      />
+      {/* search input */}
+      <TextField label = {`${inputValue}`} variant = "standard" />
+      {/* add book icon */}
+      <IconButton color = "primary" aria-label = "add new book" href = "/books/view/bookForm">
+        <AddIcon fontSize = "large" />
+      </IconButton>
+    </Box>
   );
 }
 
