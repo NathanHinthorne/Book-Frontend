@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import darkTheme from "@/app/books/view/theme";
 import {
+    Autocomplete,
     Divider,
     IconButton,
     Link,
@@ -17,6 +18,7 @@ import {
     ListItemAvatar,
     ListItemText,
     Stack,
+    TextField,
     ToggleButton,
     ToggleButtonGroup,
 } from "@mui/material";
@@ -31,6 +33,8 @@ import Footer from "src/app/books/components/Layout/Footer";
 import Header from "src/app/books/components/Layout/Header";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
+import { render } from "react-dom";
+
 
 export default function Home() {
     const [books, setBooks] = useState<IBook[]>([]);
@@ -39,8 +43,9 @@ export default function Home() {
     const [selectedBooks, setSelectedBooks] = useState<IBook[]>([]);
 
     // for search functionality
-    // const [searchType, setSearchType] = useState<string>('title');
-    // const [searchTerm, setSearchTerm] = useState<string>('');
+    const searchByArray = ['Title', 'Author', 'ISBN', 'Publication Year', 'Rating'];
+    const [searchType, setSearchType] = useState<string | null>(searchByArray[0]);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     // reflect all books from the database in the bookList
     useEffect(() => {
@@ -58,12 +63,100 @@ export default function Home() {
         fetchBooks();
     }, []);
 
-    const handleSearch = () => {
-        // Perform the search
-        // ...
+    const searchBooks = async () => {
+        if (searchType === null) {
+            alert('Please select a search type');
+            setIsLoading(false);
+            return;
+        }
 
-        setHasSearched(true);
+        setIsLoading(true);
+        let fetchedBooks;
+        switch (searchType) {
+            case 'Title':
+                fetchedBooks = await api.getBookByTitle(searchTerm);
+                break;
+            case 'Author':
+                fetchedBooks = await api.getBookByAuthor(searchTerm);
+                break;
+            case 'ISBN':
+                fetchedBooks = await api.getBookByIsbn(parseInt(searchTerm));
+                break;
+            case 'Rating':
+                fetchedBooks = await api.getBookByRating(parseInt(searchTerm));
+                break;
+            case 'Publication Year':
+                fetchedBooks = await api.getBookByPublicationYear(parseInt(searchTerm));
+                break;
+            default:
+                alert('Invalid search type');
+                setIsLoading(false);
+                return;
+        }
+        setBooks(fetchedBooks);
+        setIsLoading(false);
+
+        if (hasSearched === false) {
+            // first time the user has searched
+            setHasSearched(true);
+        }
     };
+
+
+    const renderSearch = () => {
+
+        return (
+            <Box
+                display="flex"
+                justifyContent="flex-end"
+                mb={2}
+                mt={2}
+            >
+                <Box
+                    sx={{
+                        py: 2, // Add padding to the top and bottom
+                        px: 4, // Add padding to the left and right
+                        backgroundColor: '#333333',
+                        borderRadius: '10px', // Set rounded edges
+                    }}
+                    // left to right
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    {/* Drop down menu */}
+                    <Autocomplete
+                        value={searchType}
+                        onChange={(event: any, newValue: string | null) => {
+                            setSearchType(newValue);
+                        }}
+                        inputValue={searchTerm}
+                        onInputChange={(event, newInputValue) => {
+                            setSearchTerm(newInputValue);
+                        }}
+                        options={searchByArray}
+                        sx={{
+                            width: 300,
+                            mr: 1, // Add some margin to the right of the Autocomplete
+                        }}
+                        renderInput={(params) => <TextField {...params} label="Search by" />}
+                    />
+                    {/* Search input */}
+                    <TextField
+                        label={`${searchTerm}`}
+                        variant="standard"
+                        onKeyDown={(ev) => {
+                            if (ev.key === 'Enter') {
+                                ev.preventDefault();
+                                searchBooks();
+                            }
+                        }}
+                    />
+                </Box>
+            </Box>
+        );
+    }
 
     const deleteSelectedBooks = async () => {
         const isbns = selectedBooks.map(book => book.isbn13);
@@ -123,10 +216,12 @@ export default function Home() {
         );
     }
 
+
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <Container maxWidth="lg">
+                {renderSearch()}
                 <Box
                     sx={{
                         my: 4,

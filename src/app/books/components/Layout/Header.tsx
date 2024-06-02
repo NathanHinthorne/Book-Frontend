@@ -12,11 +12,8 @@ import logo from "src/app/books/logoDarkMode.png";
 import Image from 'next/image';
 import Link from 'next/link';
 
-const searchByArray = ['Author', 'Title', 'ISBN', 'Publication Year', 'Rating'];
 
 function Header() {
-  const [value, setValue] = React.useState<string | null>(searchByArray[0]);
-  const [inputValue, setInputValue] = React.useState('');
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -44,29 +41,22 @@ function Header() {
 
         {/* Drop down menu */}
         <Autocomplete
-          value={value}
+          value={searchType}
           onChange={(event: any, newValue: string | null) => {
-            setValue(newValue);
+            setSearchType(newValue);
           }}
-          inputValue={inputValue}
+          inputValue={searchTerm}
           onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
+            setSearchTerm(newInputValue);
           }}
           options={searchByArray}
           sx={{
             width: 300,
-            '& .MuiAutocomplete-paper': {
-              background: 'black', // Change this to match your dark theme's background color
-            },
-            '& .MuiAutocomplete-option': {
-              color: 'white', // Change this to match your dark theme's text color
-              background: 'black', // Change this to match your dark theme's background color
-            },
           }}
           renderInput={(params) => <TextField {...params} label="Search by" />}
         />
         {/* Search input */}
-        <TextField label={`${inputValue}`} variant="standard" />
+        <TextField label={`${searchTerm}`} variant="standard" />
       </Box>
 
     </ThemeProvider>
