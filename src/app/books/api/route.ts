@@ -1,5 +1,5 @@
 import { revalidateTag } from "next/cache";
-import { IBook, IRatings } from "src/core/model/book.model";
+import { IBook, ICreatedBook, IRatings } from "src/core/model/book.model";
 
 // Helper function to make fetch requests
 async function fetchWithRevalidate(url: string, options: RequestInit, tags: string[] = []) {
@@ -25,18 +25,17 @@ async function justFetch(url: string, options: RequestInit) {
 export async function getAllBooks(pageNumber?: number, booksPerPage?: number) {
   let data;
   if (pageNumber && booksPerPage) {
-    ({ data } = await justFetch(`http://localhost:4000/books/all?page=${pageNumber}&limit=${booksPerPage}`, {
+    ({ data } = await fetchWithRevalidate(`http://localhost:4000/books/all?page=${pageNumber}&limit=${booksPerPage}`, {
       method: "GET",
     }));
   } else {
-    ({ data } = await justFetch(`http://localhost:4000/books/all`, {
+    ({ data } = await fetchWithRevalidate(`http://localhost:4000/books/all`, {
       method: "GET",
     }));
   }
 
   // The response data is an object with a "books" property
   // Thus, we should return the "books" property directly
-  console.log(data.books);
   return data.books;
 }
 
@@ -120,7 +119,7 @@ export async function updateRatingsByIsbn(isbn: number, ratings: IRatings) {
 
 // ---- POST ----
 
-export async function createBook(book: IBook) {
+export async function createBook(book: ICreatedBook) {
   const response = await fetch(`http://localhost:4000/books/add`, {
     method: "POST",
     headers: {

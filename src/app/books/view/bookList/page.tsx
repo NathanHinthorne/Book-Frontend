@@ -34,7 +34,7 @@ import { useEffect, useState } from "react";
 const theme = createTheme();
 
 export default function Home() {
-    // fake books data
+    // fake book data
     const [books, setBooks] = useState<IBook[]>([{
         isbn13: 0,
         authors: "...loading authors",
@@ -60,7 +60,7 @@ export default function Home() {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const fetchedBooks = await api.getAllBooks(1, 30); // 1 page, 30 books per page
+                const fetchedBooks = await api.getAllBooks(1, 28); // 1 page, 30 books per page
                 setBooks(fetchedBooks);
             } catch (error) {
                 console.error('Failed to fetch books:', error);
