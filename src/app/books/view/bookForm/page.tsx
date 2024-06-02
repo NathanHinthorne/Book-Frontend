@@ -19,15 +19,16 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 
-import { IBook } from "@/core/model/book.model";
+import { IBook, ICreatedBook } from "@/core/model/book.model";
 import * as api from "@/app/books/api/route";
 import BookForm from "src/app/books/components/Book/BookForm";
 
 const theme = createTheme();
 
 export default function Page() {
-    const onSubmit = (book: IBook) => {
+    const onSubmit = (book: ICreatedBook) => {
         console.log(book);
+
         api.createBook(book)
             .then((response) => {
                 console.log(response);

@@ -3,10 +3,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function BookListItem({ book }: { book: IBook }) {
+
+function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boolean, onSelect: (book: IBook) => void }) {
     const renderBook = () => {
         return (
-            <Card key={book.isbn13} style={{ width: '100%', height: '100%' }}>
+            <Card
+                key={book.isbn13}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: selected ? 'darkgrey' : 'white',
+                    transition: 'background-color 0.3s ease'
+                }}
+                onClick={() => onSelect(book)}
+            >
                 <CardContent>
                     <Typography variant="h5" component="h2">
                         {book.title}
