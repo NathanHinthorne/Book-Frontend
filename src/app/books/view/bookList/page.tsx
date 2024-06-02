@@ -6,7 +6,8 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import darkTheme from "@/app/books/view/theme";
 import {
     Divider,
     IconButton,
@@ -31,68 +32,120 @@ import Header from "src/app/books/components/Layout/Header";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
 
-const theme = createTheme();
-
 export default function Home() {
-    // fake book data
-    const [books, setBooks] = useState<IBook[]>([{
-        isbn13: 0,
-        authors: "...loading authors",
-        publication: 0,
-        original_title: "...loading original title",
-        title: "...loading title",
-        ratings: {
-            average: 0,
-            count: 0,
-            rating_1: 0,
-            rating_2: 0,
-            rating_3: 0,
-            rating_4: 0,
-            rating_5: 0,
-        },
-        icons: {
-            large: "...loading large icon",
-            small: "...loading small icon",
-        },
-    }]);
+    const [books, setBooks] = useState<IBook[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [hasSearched, setHasSearched] = useState(false);
+    const [selectedBooks, setSelectedBooks] = useState<IBook[]>([]);
+
+    // for search functionality
+    // const [searchType, setSearchType] = useState<string>('title');
+    // const [searchTerm, setSearchTerm] = useState<string>('');
 
     // reflect all books from the database in the bookList
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const fetchedBooks = await api.getAllBooks(1, 28); // 1 page, 30 books per page
+                const fetchedBooks = await api.getAllBooks(5, 28);
                 setBooks(fetchedBooks);
             } catch (error) {
                 console.error('Failed to fetch books:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchBooks();
     }, []);
 
+    const handleSearch = () => {
+        // Perform the search
+        // ...
+
+        setHasSearched(true);
+    };
+
+    const deleteSelectedBooks = async () => {
+        const isbns = selectedBooks.map(book => book.isbn13);
+        const message = await api.deleteBooks(isbns);
+        console.log(message);
+        setSelectedBooks([]);
+
+        // Refresh the book list
+        // TODO run the PREVIOUS api call used to refresh the book list
+        // try {
+        //     const fetchedBooks = await api.getAllBooks(1, 28); // 1 page, 28 books per page
+        //     setBooks(fetchedBooks);
+        // } catch (error) {
+        //     console.error('Failed to fetch books:', error);
+        // };
+    };
+
+    const stillLoading = () => {
+        return (
+            <Typography variant="h4" component="h2" gutterBottom>
+                Loading books...
+            </Typography>
+        );
+    }
+
+    const renderBooks = () => {
+        return (
+            <BookList books={books} selectedBooks={selectedBooks} setSelectedBooks={setSelectedBooks} />
+        );
+    }
+
+    const renderDeleteButton = () => {
+        return (
+            <Box
+                sx={{
+                    // left hand side of the screen
+                    position: "fixed",
+                    bottom: "20px",
+                    left: "20px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={deleteSelectedBooks}
+                    startIcon={<DeleteIcon />}
+                    disabled={selectedBooks.length === 0}
+                    sx={{ width: "140px" }}
+                >
+                    Delete books
+                </Button>
+            </Box>
+        );
+    }
+
     return (
-        <>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Header />
-                <Container maxWidth="lg">
-                    <Box
-                        sx={{
-                            my: 4,
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography variant="h4" component="h1" gutterBottom>
-                            Explore
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <Container maxWidth="lg">
+                <Box
+                    sx={{
+                        my: 4,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    {!hasSearched && (
+                        <Typography variant="h2" component="h1" gutterBottom color="primary">
+                            <strong>Explore</strong>
                         </Typography>
-                        <BookList books={books} />
-                    </Box>
-                </Container>
-                <Footer />
-            </ThemeProvider>
-        </>
+                    )}
+
+                    {isLoading ? stillLoading() : renderBooks()}
+                    {renderDeleteButton()}
+                </Box>
+            </Container>
+        </ThemeProvider>
     );
 }

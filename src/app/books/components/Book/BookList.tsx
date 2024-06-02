@@ -4,14 +4,14 @@ import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import * as api from '@/app/books/api/route';
 
-function BookList({ books }: { books: IBook[] }) {
-    const [selectedBooks, setSelectedBooks] = useState<IBook[]>([]);
+function BookList({ books, selectedBooks, setSelectedBooks }:
+    { books: IBook[], selectedBooks: IBook[], setSelectedBooks: React.Dispatch<React.SetStateAction<IBook[]>> }) {
 
     const handleSelectBook = (book: IBook) => {
-        setSelectedBooks(prevBooks => {
-            if (prevBooks.find(b => b.isbn13 === book.isbn13)) {
+        setSelectedBooks((prevBooks: IBook[]) => {
+            if (prevBooks.find((b: { isbn13: number; }) => b.isbn13 === book.isbn13)) {
                 // If the book is already selected, unselect it
-                return prevBooks.filter(b => b.isbn13 !== book.isbn13);
+                return prevBooks.filter((b: { isbn13: number; }) => b.isbn13 !== book.isbn13);
             } else {
                 // If the book is not selected, add it to the selected books
                 return [...prevBooks, book];
@@ -19,18 +19,11 @@ function BookList({ books }: { books: IBook[] }) {
         });
     };
 
-    const deleteBooks = async () => {
-        const isbns = selectedBooks.map(book => book.isbn13);
-        const message = await api.deleteBooks(isbns);
-        setSelectedBooks([]);
-        console.log(message);
-    };
-
     const renderBooks = () => {
         return (
             <Grid container spacing={3}>
                 {books.map((book: IBook) => {
-                    const isSelected = !!selectedBooks.find(b => b.isbn13 === book.isbn13);
+                    const isSelected: boolean = selectedBooks.some((b: { isbn13: number; }) => b.isbn13 === book.isbn13);
                     return (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={book.isbn13}>
                             <BookListItem book={book} selected={isSelected} onSelect={handleSelectBook} />
