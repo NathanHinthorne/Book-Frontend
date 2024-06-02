@@ -19,7 +19,7 @@ function BookList({ books }: { books: IBook[] }) {
         });
     };
 
-    const deleteBooks = async () => {
+    const deleteSelectedBooks = async () => {
         const isbns = selectedBooks.map(book => book.isbn13);
         const message = await api.deleteBooks(isbns);
         setSelectedBooks([]);
