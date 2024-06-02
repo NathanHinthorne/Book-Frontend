@@ -50,12 +50,12 @@ export default function Page() {
                         alignItems: "center",
                     }}
                 >
-                    <Typography variant="h4" component="h1" gutterBottom color="primary">
-                        Add Book
+                    <Typography variant="h3" component="h1" gutterBottom color="primary">
+                        <strong>Add Book</strong>
                     </Typography>
                     <BookForm onSubmit={onSubmit} />
                 </Box>
-                <Button variant="contained" href="/books/view/bookList"> Back </Button>
+                <Button variant="contained" href="/books/view/bookList" color="primary"> Back </Button>
             </Container>
         </ThemeProvider>
     );
