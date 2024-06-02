@@ -55,6 +55,7 @@ export default function Page() {
                     </Typography>
                     <BookForm onSubmit={onSubmit} />
                 </Box>
+                <Button variant = "contained" href="/books/view/bookList"> Back </Button>
             </Container>
         </ThemeProvider>
     );
