@@ -5,9 +5,9 @@ import { IBook, ICreatedBook, IRatings } from "src/core/model/book.model";
 async function fetchWithRevalidate(url: string, options: RequestInit, tags: string[] = []) {
   const res = await fetch(url, options);
   const data = await res.json();
-  if (res.ok && tags.length > 0) {
-    tags.forEach(tag => revalidateTag(tag));
-  }
+   if (res.ok && tags.length > 0) {
+  //   tags.forEach(tag => revalidateTag(tag));
+   }
   return { data, status: res.status, ok: res.ok };
 }
 
@@ -40,11 +40,11 @@ export async function getAllBooks(pageNumber?: number, booksPerPage?: number) {
 }
 
 export async function getBookByIsbn(isbn: number) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books?isbn=${isbn}`, {
+  const { data } = await fetchWithRevalidate(`http://localhost:4000/books/isbn?isbn=${isbn}`, {
     method: "GET",
   }, ["books"]);
 
-  return data.books;
+  return data.books[0];
 }
 
 export async function getBookByTitle(title: string) {
