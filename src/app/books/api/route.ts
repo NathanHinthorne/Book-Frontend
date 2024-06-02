@@ -5,9 +5,9 @@ import { IBook, ICreatedBook, IRatings } from "src/core/model/book.model";
 async function fetchWithRevalidate(url: string, options: RequestInit, tags: string[] = []) {
   const res = await fetch(url, options);
   const data = await res.json();
-   if (res.ok && tags.length > 0) {
-  //   tags.forEach(tag => revalidateTag(tag));
-   }
+  if (res.ok && tags.length > 0) {
+    //   tags.forEach(tag => revalidateTag(tag));
+  }
   return { data, status: res.status, ok: res.ok };
 }
 
@@ -40,41 +40,51 @@ export async function getAllBooks(pageNumber?: number, booksPerPage?: number) {
 }
 
 export async function getBookByIsbn(isbn: number) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books/isbn?isbn=${isbn}`, {
+  const { data } = await justFetch(`http://localhost:4000/books/isbn?isbn=${isbn}`, {
     method: "GET",
-  }, ["books"]);
+  });
 
-  return data.books[0];
+  return data.books;
 }
 
 export async function getBookByTitle(title: string) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books?title=${title}`, {
+  const { data } = await justFetch(`http://localhost:4000/books/title?title=${title}`, {
     method: "GET",
-  }, ["books"]);
+  });
+
+  console.log(data.books);
 
   return data.books;
 }
 
 export async function getBookByAuthor(author: string) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books?author=${author}`, {
+  const { data } = await justFetch(`http://localhost:4000/books/authors?author=${author}`, {
     method: "GET",
-  }, ["books"]);
+  });
+
+  console.log(data.books);
 
   return data.books;
 }
 
 export async function getBookByPublicationYear(publicationYear: number) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books?pub_year=${publicationYear}`, {
+  const { data } = await justFetch(`http://localhost:4000/books/pub_year?year=${publicationYear}`, {
     method: "GET",
-  }, ["books"]);
+  });
+
+  console.log(data.books);
+
 
   return data.books;
 }
 
 export async function getBookByRating(rating: number) {
-  const { data } = await fetchWithRevalidate(`http://localhost:4000/books?rating=${rating}`, {
+  const { data } = await justFetch(`http://localhost:4000/books/rating?rating=${rating}`, {
     method: "GET",
-  }, ["books"]);
+  });
+
+  console.log(data.books);
+
 
   return data.books;
 }

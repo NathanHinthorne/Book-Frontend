@@ -34,7 +34,7 @@ function BookList({ books, selectedBooks, setSelectedBooks }:
         );
     };
 
-    return (books.length > 0) ? renderBooks() : <p>Book list empty</p>;
+    return (books.length > 0) ? renderBooks() : <h2>Book list empty</h2>;
 }
 
 export default BookList;

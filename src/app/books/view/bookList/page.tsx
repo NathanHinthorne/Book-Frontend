@@ -2,7 +2,6 @@
 
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -11,29 +10,14 @@ import darkTheme from "@/app/books/view/theme";
 import {
     Autocomplete,
     Divider,
-    IconButton,
-    Link,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Stack,
     TextField,
-    ToggleButton,
-    ToggleButtonGroup,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 
-import NextLink from "next/link";
-import ProTip from "@/components/ProTips";
-import Informational from "@/components/Informational";
 import BookList from "src/app/books/components/Book/BookList";
 import { IBook } from "@/core/model/book.model";
-import Footer from "src/app/books/components/Layout/Footer";
-import Header from "src/app/books/components/Layout/Header";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
-import { render } from "react-dom";
 
 
 export default function Home() {
@@ -71,7 +55,10 @@ export default function Home() {
         }
 
         setIsLoading(true);
-        let fetchedBooks;
+        let fetchedBooks = [];
+
+        console.log(`Searching for ${searchType} containing ${searchTerm}`);
+
         switch (searchType) {
             case 'Title':
                 fetchedBooks = await api.getBookByTitle(searchTerm);
@@ -80,6 +67,12 @@ export default function Home() {
                 fetchedBooks = await api.getBookByAuthor(searchTerm);
                 break;
             case 'ISBN':
+                // check if isbn is exactly 13 digits
+                if (searchTerm.length !== 13) {
+                    alert('ISBN must be 13 digits');
+                    setIsLoading(false);
+                    return;
+                }
                 fetchedBooks = await api.getBookByIsbn(parseInt(searchTerm));
                 break;
             case 'Rating':
@@ -131,10 +124,6 @@ export default function Home() {
                         onChange={(event: any, newValue: string | null) => {
                             setSearchType(newValue);
                         }}
-                        inputValue={searchTerm}
-                        onInputChange={(event, newInputValue) => {
-                            setSearchTerm(newInputValue);
-                        }}
                         options={searchByArray}
                         sx={{
                             width: 300,
@@ -144,8 +133,9 @@ export default function Home() {
                     />
                     {/* Search input */}
                     <TextField
-                        label={`${searchTerm}`}
+                        label={`${searchType}`}
                         variant="standard"
+                        onChange={(event) => setSearchTerm(event.target.value)}
                         onKeyDown={(ev) => {
                             if (ev.key === 'Enter') {
                                 ev.preventDefault();

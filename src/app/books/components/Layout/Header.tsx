@@ -37,26 +37,6 @@ function Header() {
             <Image src={logo} alt="Logo" width={120} height={100} />
           </IconButton>
         </Link>
-
-
-        {/* Drop down menu */}
-        <Autocomplete
-          value={searchType}
-          onChange={(event: any, newValue: string | null) => {
-            setSearchType(newValue);
-          }}
-          inputValue={searchTerm}
-          onInputChange={(event, newInputValue) => {
-            setSearchTerm(newInputValue);
-          }}
-          options={searchByArray}
-          sx={{
-            width: 300,
-          }}
-          renderInput={(params) => <TextField {...params} label="Search by" />}
-        />
-        {/* Search input */}
-        <TextField label={`${searchTerm}`} variant="standard" />
       </Box>
 
     </ThemeProvider>
