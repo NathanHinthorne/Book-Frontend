@@ -62,7 +62,7 @@ function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boo
                             <span>total ratings: {book.ratings.count}</span>
                         </div>
                     </div>
-                    <Link href={`/books/view/bookDeails?data=${encodeURIComponent(JSON.stringify(book))}`}>
+                    <Link href={`/books/view/bookDetails`}>
                         <IconButton style={btnStyle}> 
                             <Typography variant="body2" component="p" color="textSecondary">
                                 Learn More
