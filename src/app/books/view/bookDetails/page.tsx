@@ -56,7 +56,7 @@ export default function Home() {
         const fetchBook = async () => {
             try {
                 let isbn : number = 9780061120080;
-                const fetchedBook = await api.getBookByIsbn(isbn);
+                const fetchedBook = await api.getBookByIsbnForBD(isbn);
                 setBook(fetchedBook);
             } catch (error) {
                 console.error('Failed to fetch book:', error);
