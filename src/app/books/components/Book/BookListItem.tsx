@@ -6,6 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import darkTheme from "@/app/books/view/theme";
 
+import { IconButton, Link } from '@mui/material';
+import { usePathname } from 'next/navigation';
+
 
 const btnStyle = {
     textDecoration: 'none',
@@ -16,15 +19,11 @@ const btnStyle = {
     borderRadius: 8,
     padding: '12px 24px',
     transition: '0.2s ease-in-out',
-    textAlign: 'center',
+    //textAlign: 'center',
     marginTop: 8,
 }
 
 function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boolean, onSelect: (book: IBook) => void }) {
-    const handleLearnMore = (e: React.MouseEvent) => {
-        e.preventDefault();
-        //TODO Open the book details page with the book isbn
-    }
 
     const renderBook = () => {
         return (
@@ -63,9 +62,16 @@ function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boo
                             <span>total ratings: {book.ratings.count}</span>
                         </div>
                     </div>
-                    <a href="#" style={btnStyle} target="_blank" onClick={handleLearnMore}>
+                    <Link href={`/books/view/bookDeails?data=${encodeURIComponent(JSON.stringify(book))}`}>
+                        <IconButton style={btnStyle}> 
+                            <Typography variant="body2" component="p" color="textSecondary">
+                                Learn More
+                            </Typography>
+                        </IconButton>
+                    </Link>
+                    {/* <a href="/books/view/bookForm" style={btnStyle} target="_blank" onClick={handleLearnMore}>
                         Learn more
-                    </a>
+                    </a> */}
                 </CardContent>
             </Card >
         );

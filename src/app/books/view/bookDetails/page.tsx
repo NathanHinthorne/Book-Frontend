@@ -5,21 +5,21 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import { IBook } from "@/core/model/book.model";
-import BookList from "src/app/books/components/Book/BookList";
 import * as api from "@/app/books/api/route";
-import Footer from "src/app/books/components/Layout/Footer";
-import Header from "src/app/books/components/Layout/Header";
 import { useEffect, useState } from "react";
 import BookDetails from "../../components/Book/BookDetails";
+import darkTheme from "@/app/books/view/theme";
+import React from "react";
+import { useRouter } from 'next/navigation';
 
 
 
 const theme = createTheme();
 
-
 export default function Home() {
+    //const router = useRouter();
+    //const [data, setData] = useState({});
     // fake book data
     const [book, setBook] = useState<IBook>({
         isbn13: 0,
@@ -42,8 +42,16 @@ export default function Home() {
         },
     });
 
+    // useEffect(() => {
+    //     if (router.query.data) {
+    //       const jsonString = decodeURIComponent(router.query.data as string);
+    //       const parsedData = JSON.parse(jsonString);
+    //       setData(parsedData);
+    //     }
+    //   }, [router.query.data]);
 
-    // reflect book detail from the database in the bookDetail
+
+//    reflect book detail from the database in the bookDetail
     useEffect(() => {
         const fetchBook = async () => {
             try {
@@ -58,11 +66,12 @@ export default function Home() {
         fetchBook();
     }, []);
 
+
+
     return (
         <>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={darkTheme}>
                 <CssBaseline />
-                <Header />
                 <Container>
                     <Box
                         sx={{
@@ -79,7 +88,6 @@ export default function Home() {
                         <BookDetails book={book} />
                     </Box>
                 </Container>
-                <Footer />
             </ThemeProvider>
         </>
     );
