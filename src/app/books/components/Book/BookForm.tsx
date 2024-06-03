@@ -51,7 +51,7 @@ function BookForm({ onSubmit }: { onSubmit: (formData: ICreatedBook) => void }) 
         // if any field is empty, return
         if (formData.authors === '' || formData.publication_year === 0
             || formData.original_title === '' || formData.title === '') {
-            alert('Top two rows must be filled out');
+            alert('Top row must be filled out');
             return;
         }
 
@@ -68,6 +68,25 @@ function BookForm({ onSubmit }: { onSubmit: (formData: ICreatedBook) => void }) 
             alert('Ratings must be positive');
             return;
         }
+
+        // if any rating is 0, fill it with 1 to avoid division by 0
+        if (formData.rating_1_star === 0) {
+            formData.rating_1_star = 1;
+        }
+        if (formData.rating_2_star === 0) {
+            formData.rating_2_star = 1;
+        }
+        if (formData.rating_3_star === 0) {
+            formData.rating_3_star = 1;
+        }
+        if (formData.rating_4_star === 0) {
+            formData.rating_4_star = 1;
+        }
+        if (formData.rating_5_star === 0) {
+            formData.rating_5_star = 1;
+        }
+
+
 
 
         // calculate total count

@@ -76,9 +76,21 @@ export default function Home() {
                 fetchedBooks = await api.getBookByIsbn(parseInt(searchTerm));
                 break;
             case 'Rating':
+                // check if rating is a number
+                if (isNaN(parseInt(searchTerm))) {
+                    alert('Rating must be a number');
+                    setIsLoading(false);
+                    return;
+                }
                 fetchedBooks = await api.getBookByRating(parseInt(searchTerm));
                 break;
             case 'Publication Year':
+                // check if publication year is a number
+                if (isNaN(parseInt(searchTerm))) {
+                    alert('Publication year must be a number');
+                    setIsLoading(false);
+                    return;
+                }
                 fetchedBooks = await api.getBookByPublicationYear(parseInt(searchTerm));
                 break;
             default:
@@ -97,7 +109,6 @@ export default function Home() {
 
 
     const renderSearch = () => {
-
         return (
             <Box
                 display="flex"
@@ -119,18 +130,20 @@ export default function Home() {
                     alignItems="center"
                 >
                     {/* Drop down menu */}
-                    <Autocomplete
-                        value={searchType}
-                        onChange={(event: any, newValue: string | null) => {
-                            setSearchType(newValue);
-                        }}
-                        options={searchByArray}
-                        sx={{
-                            width: 300,
-                            mr: 1, // Add some margin to the right of the Autocomplete
-                        }}
-                        renderInput={(params) => <TextField {...params} label="Search by" />}
-                    />
+                    <ThemeProvider theme={darkTheme}>
+                        <Autocomplete
+                            value={searchType}
+                            onChange={(event: any, newValue: string | null) => {
+                                setSearchType(newValue);
+                            }}
+                            options={searchByArray}
+                            sx={{
+                                width: 300,
+                                mr: 1, // Add some margin to the right of the Autocomplete
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Search by" />}
+                        />
+                    </ThemeProvider>
                     {/* Search input */}
                     <TextField
                         label={`${searchType}`}
