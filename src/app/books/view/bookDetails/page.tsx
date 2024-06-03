@@ -9,14 +9,11 @@ import { IBook } from "@/core/model/book.model";
 import * as api from "@/app/books/api/route";
 import { useEffect, useState } from "react";
 import BookDetails from "../../components/Book/BookDetails";
-import darkTheme from "@/app/books/view/theme";
-import React from "react";
-import { useRouter } from 'next/navigation';
+import darkTheme from "@/app/books/view/theme"
 
 
 
 const theme = createTheme();
-
 export default function Home() {
     //const router = useRouter();
     //const [data, setData] = useState({});
@@ -55,7 +52,7 @@ export default function Home() {
     useEffect(() => {
         const fetchBook = async () => {
             try {
-                let isbn : number = 9780061120080;
+                let isbn : number = Number(window.location.search.substring(6));
                 const fetchedBook = await api.getBookByIsbnForBD(isbn);
                 setBook(fetchedBook);
             } catch (error) {

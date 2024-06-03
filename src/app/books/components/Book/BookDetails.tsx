@@ -9,6 +9,7 @@ import * as api from "@/app/books/api/route";
 
 function BookDetails({ book }: { book: IBook }) {
     const renderBook = () => {
+        //console.log(window.location.search);
         return (
             <Box>
                 <Box

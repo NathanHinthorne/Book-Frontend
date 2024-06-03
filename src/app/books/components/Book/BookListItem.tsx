@@ -24,14 +24,11 @@ const btnStyle = {
 }
 
 function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boolean, onSelect: (book: IBook) => void }) {
-
     const renderBook = () => {
         return (
             <Card
                 key={book.isbn13}
                 style={{
-                    // width: '100%',
-                    // height: '100%',
                     marginTop: 20,
                     maxWidth: '90vw',
                     display: 'flex',
@@ -62,16 +59,13 @@ function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boo
                             <span>total ratings: {book.ratings.count}</span>
                         </div>
                     </div>
-                    <Link href={`/books/view/bookDetails`}>
+                    <Link href={`/books/view/bookDetails?data=${encodeURIComponent(book.isbn13)}`}>
                         <IconButton style={btnStyle}> 
                             <Typography variant="body2" component="p" color="textSecondary">
                                 Learn More
                             </Typography>
                         </IconButton>
                     </Link>
-                    {/* <a href="/books/view/bookForm" style={btnStyle} target="_blank" onClick={handleLearnMore}>
-                        Learn more
-                    </a> */}
                 </CardContent>
             </Card >
         );
