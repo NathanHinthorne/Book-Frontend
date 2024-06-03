@@ -57,12 +57,6 @@ function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boo
                         isbn: {book.isbn13}
                     </Typography>
 
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ marginLeft: '10px' }}>
-                            <span>rating: {book.ratings.average}</span> <br />
-                            <span>total ratings: {book.ratings.count}</span>
-                        </div>
-                    </div>
                     <a href="#" style={btnStyle} target="_blank" onClick={handleLearnMore}>
                         Learn more
                     </a>
