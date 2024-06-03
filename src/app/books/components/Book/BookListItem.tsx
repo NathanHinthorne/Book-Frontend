@@ -6,6 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import darkTheme from "@/app/books/view/theme";
 
+import { IconButton, Link } from '@mui/material';
+import { usePathname } from 'next/navigation';
+
 
 const btnStyle = {
     textDecoration: 'none',
@@ -16,23 +19,16 @@ const btnStyle = {
     borderRadius: 8,
     padding: '12px 24px',
     transition: '0.2s ease-in-out',
-    textAlign: 'center',
+    //textAlign: 'center',
     marginTop: 8,
 }
 
 function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boolean, onSelect: (book: IBook) => void }) {
-    const handleLearnMore = (e: React.MouseEvent) => {
-        e.preventDefault();
-        //TODO Open the book details page with the book isbn
-    }
-
     const renderBook = () => {
         return (
             <Card
                 key={book.isbn13}
                 style={{
-                    // width: '100%',
-                    // height: '100%',
                     marginTop: 20,
                     maxWidth: '90vw',
                     display: 'flex',
@@ -57,9 +53,19 @@ function BookListItem({ book, selected, onSelect }: { book: IBook, selected: boo
                         isbn: {book.isbn13}
                     </Typography>
 
-                    <a href="#" style={btnStyle} target="_blank" onClick={handleLearnMore}>
-                        Learn more
-                    </a>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ marginLeft: '10px' }}>
+                            <span>rating: {book.ratings.average}</span> <br />
+                            <span>total ratings: {book.ratings.count}</span>
+                        </div>
+                    </div>
+                    <Link href={`/books/view/bookDetails?data=${encodeURIComponent(book.isbn13)}`}>
+                        <IconButton style={btnStyle}> 
+                            <Typography variant="body2" component="p" color="textSecondary">
+                                Learn More
+                            </Typography>
+                        </IconButton>
+                    </Link>
                 </CardContent>
             </Card >
         );

@@ -46,6 +46,13 @@ export async function getBookByIsbn(isbn: number) {
 
   return data.books;
 }
+export async function getBookByIsbnForBD(isbn: number) {
+  const { data } = await justFetch(`http://localhost:4000/books/isbn?isbn=${isbn}`, {
+    method: "GET",
+  });
+
+  return data.books[0];
+}
 
 export async function getBookByTitle(title: string) {
   const { data } = await justFetch(`http://localhost:4000/books/title?title=${title}`, {

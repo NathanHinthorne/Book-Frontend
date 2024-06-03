@@ -35,7 +35,7 @@ export default function Home() {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const fetchedBooks = await api.getAllBooks(5, 28);
+                const fetchedBooks = await api.getAllBooks(5, 28); //5, 28
                 setBooks(fetchedBooks);
             } catch (error) {
                 console.error('Failed to fetch books:', error);
